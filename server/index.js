@@ -1,3 +1,4 @@
+const db = require("./queries");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -19,6 +20,9 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+// COMMON APIS
+app.post("/signup", db.signup);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
