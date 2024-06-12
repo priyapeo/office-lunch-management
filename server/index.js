@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 
 // COMMON APIS
 app.post("/signup", db.signup);
+app.post("/login", db.login);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
