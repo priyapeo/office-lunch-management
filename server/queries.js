@@ -62,7 +62,84 @@ const login = async (request, response) => {
   }
 };
 
+const addMenu = async (request, response) => {
+  const { name, description, image_url, created_at } = request.body;
+
+  if (!name || !description || !image_url || !created_at) {
+    return response.status(400).json({
+      message: "name, description, image_url and created_at required",
+    });
+  }
+
+  try {
+    const query =
+      "INSERT INTO menus (name, description, image_url, created_at) VALUES ($1, $2, $3, $4) RETURNING *";
+
+    const values = [name, description, image_url, created_at];
+    const result = await pool.query(query, values);
+
+    response.json({
+      message: "Menu created successfully",
+      menu: result.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Server error" });
+  }
+};
+
+const getOrders = async (request, response) => {
+  try {
+    const query = `
+    SELECT
+      orders.id AS order_id,
+      orders.created_at AS order_created_at,
+      users.id AS user_id,
+      users.username AS user_name,
+      users.email AS user_email,
+      menus.id AS menu_id,
+      menus.name AS menu_name,
+      menus.description AS menu_description,
+      menus.image_url AS menu_image_url
+    FROM
+      orders
+    JOIN
+      users ON orders.user_id = users.id
+    JOIN
+      menus ON orders.menu_id = menus.id`;
+
+    const result = await pool.query(query);
+
+    const formattedResult = result.rows.map((row) => ({
+      id: row.order_id,
+      created_at: row.order_created_at,
+      user: {
+        id: row.user_id,
+        username: row.user_name,
+        email: row.user_email,
+      },
+      menu: {
+        id: row.menu_id,
+        name: row.menu_name,
+        description: row.menu_description,
+        image_url: row.menu_image_url,
+      },
+    }));
+
+    response.json({
+      orders: formattedResult,
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
 module.exports = {
   signup,
   login,
+  addMenu,
+  getOrders,
 };
