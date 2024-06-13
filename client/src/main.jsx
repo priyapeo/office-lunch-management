@@ -7,19 +7,25 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Menus from "./routes/menus";
 import AddMenu from "./routes/add-menu";
 import Orders from "./routes/orders";
+import RootLayout from "./layout/root-layout";
+import { AuthProvider } from "./contexts/authContext";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route>
-          <Route path="/" element={<Menus />} />
-          <Route path="/add-menu" element={<AddMenu />} />
-          <Route path="/orders" element={<Orders />} />
-        </Route>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <AuthProvider>
+        <RootLayout>
+          <Routes>
+            <Route>
+              <Route path="/" element={<Menus />} />
+              <Route path="/add-menu" element={<AddMenu />} />
+              <Route path="/orders" element={<Orders />} />
+            </Route>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </RootLayout>
+      </AuthProvider>
     </Router>
   );
 }
