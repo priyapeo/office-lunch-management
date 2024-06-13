@@ -25,6 +25,10 @@ app.use((req, res, next) => {
 app.post("/signup", db.signup);
 app.post("/login", db.login);
 
+//ADMIN APIS
+app.post("/admin/add-menu", db.addMenu);
+app.get("/admin/orders", db.getOrders);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
