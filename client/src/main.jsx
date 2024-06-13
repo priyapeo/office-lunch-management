@@ -9,6 +9,7 @@ import AddMenu from "./routes/add-menu";
 import Orders from "./routes/orders";
 import RootLayout from "./layout/root-layout";
 import { AuthProvider } from "./contexts/authContext";
+import PrivateRoutes from "./components/private-route";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <AuthProvider>
         <RootLayout>
           <Routes>
-            <Route>
+            <Route element={<PrivateRoutes />}>
               <Route path="/" element={<Menus />} />
               <Route path="/add-menu" element={<AddMenu />} />
               <Route path="/orders" element={<Orders />} />
