@@ -41,7 +41,7 @@ const RootLayout = (props) => {
             alignItems: "center",
           }}
         >
-          <Button type="link">Logo</Button>
+          <Button type="link">Office Lunch Management</Button>
           <Menu
             theme="dark"
             mode="horizontal"

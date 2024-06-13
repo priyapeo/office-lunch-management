@@ -13,7 +13,7 @@ const roleOptions = [
   },
 ];
 
-const UserForm = ({ isLogin = false, handleSubmit }) => {
+const UserForm = ({ isLogin = false, handleSubmit, renderFor }) => {
   const onFinish = (values) => {
     handleSubmit(values);
   };
@@ -56,7 +56,7 @@ const UserForm = ({ isLogin = false, handleSubmit }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" size="large">
-          Submit
+          {renderFor === "login" ? "Login" : "Sign Up"}
         </Button>
       </Form.Item>
 

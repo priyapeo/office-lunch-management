@@ -38,7 +38,11 @@ function Signup() {
       </Typography.Title>
 
       <Card>
-        <UserForm isLogin={true} handleSubmit={handleSubmit} />
+        <UserForm
+          isLogin={true}
+          handleSubmit={handleSubmit}
+          renderFor="signup"
+        />
       </Card>
     </Flex>
   );
