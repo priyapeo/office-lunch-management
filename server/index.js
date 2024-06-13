@@ -29,6 +29,10 @@ app.post("/login", db.login);
 app.post("/admin/add-menu", db.addMenu);
 app.get("/admin/orders", db.getOrders);
 
+// EMPLOYEE APIS
+app.post("/employee/add-order", db.addOrder);
+app.get("/employee/menus", db.getMenus);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });

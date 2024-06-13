@@ -137,9 +137,53 @@ const getOrders = async (request, response) => {
   }
 };
 
+const addOrder = async (request, response) => {
+  const { user_id, menu_id } = request.body;
+
+  if (!user_id || !menu_id) {
+    return response
+      .status(400)
+      .json({ message: "user_id and menu_id required" });
+  }
+
+  try {
+    const query =
+      "INSERT INTO orders (user_id, menu_id, created_at) VALUES ($1, $2, NOW()) RETURNING *";
+
+    const values = [user_id, menu_id];
+    const result = await pool.query(query, values);
+
+    response.json({
+      message: "Order created successfully",
+      order: result.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ message: "Server error" });
+  }
+};
+
+const getMenus = async (request, response) => {
+  try {
+    const query = "SELECT * FROM menus WHERE DATE(created_at) = CURRENT_DATE";
+    const result = await pool.query(query);
+
+    response.json({
+      menus: result.rows,
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
 module.exports = {
   signup,
   login,
   addMenu,
   getOrders,
+  addOrder,
+  getMenus,
 };
