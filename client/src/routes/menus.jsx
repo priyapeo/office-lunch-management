@@ -67,7 +67,7 @@ function Menus() {
                 </Button>,
               ]}
             >
-              <Meta title={menu.title} description={menu.description} />
+              <Meta title={menu.name} description={menu.description} />
             </Card>
           );
         })}
