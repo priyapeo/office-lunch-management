@@ -14,8 +14,11 @@ const roleOptions = [
 ];
 
 const UserForm = ({ isLogin = false, handleSubmit, renderFor }) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
     handleSubmit(values);
+    form.resetFields();
   };
 
   const navigate = useNavigate();
@@ -30,6 +33,7 @@ const UserForm = ({ isLogin = false, handleSubmit, renderFor }) => {
 
   return (
     <Form
+      form={form}
       name="user-form"
       onFinish={onFinish}
       autoComplete="off"

@@ -17,6 +17,7 @@ const { TextArea } = Input;
 
 function AddMenu() {
   const [fileList, setFileList] = React.useState([]);
+  const [form] = Form.useForm();
 
   const uploadProps = {
     onRemove: (file) => {
@@ -60,6 +61,8 @@ function AddMenu() {
 
         if (response.status === 200) {
           message.success(response?.data?.message);
+          form.resetFields();
+          setFileList([]);
         }
       }
     } catch (error) {
@@ -83,6 +86,7 @@ function AddMenu() {
 
       <Card>
         <Form
+          form={form}
           name="add-menu"
           onFinish={handleSubmit}
           autoComplete="off"
